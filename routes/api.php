@@ -21,9 +21,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 */
 
 /*
-creo le routes per le api.
-in automatico, queste routes si trovano dentro l'url: </api/..>:
-es: localhost:9999/api/posts).
+    creo le routes per le api.
+    in automatico, queste routes si trovano dentro l'url: </api/..>:
+    es: localhost:9999/api/posts.
+    nel secondo parametro della get() uso il backslash per indicare il namespace\la path.
 */
 Route::get('posts', 'Api\PostController@index');
 Route::get('posts/{post}', 'Api\PostController@show');

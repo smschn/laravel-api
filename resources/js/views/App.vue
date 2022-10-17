@@ -1,15 +1,23 @@
-<!-- componente globale che funge da involucro per tutta la parte front-office della web app relativamente alle views di libero accesso (disponibili senza login) -->
+<!--
+    componente globale:
+    funge da involucro per tutta la parte della web app accessibile a chi NON ha effettuato il login.
+    qui importo, registro ed uso gli altri componenti creati per questa parte del sito pubblicamente accessibile.
+-->
 
 <template>
     <div>
-        <h1> Work in progress </h1>
-        <h2> Sito in costruzione </h2>
+        <MyHeader />
     </div>
 </template>
 
 <script>
+    // importo i componenti
+    import MyHeader from '../components/MyHeader.vue';
+
     export default {
         name: 'App',
-        components: { }
+        components: {
+            MyHeader
+        }
     }
 </script>
