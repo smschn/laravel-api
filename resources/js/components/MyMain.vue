@@ -5,6 +5,7 @@
             <div class="card col-12 mb-3" v-for="(post, index) in posts" v-bind:key="index">
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
+                    <h5 class="card-title">{{post.content}}</h5>
                     <a href="#" class="btn btn-primary">Read more...</a>
                 </div>
             </div>

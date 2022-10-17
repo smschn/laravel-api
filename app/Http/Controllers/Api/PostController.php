@@ -16,7 +16,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        /*
+        con il metodo statico ::with()
+        ricostruisco la relazione post <-> category <-> tags PRIMA di inviare i dati tramite API.
+        */
+        $posts = Post::with(['category', 'tags'])->get();
 
         // faccio una return della collection <posts> che viene trasformata in formato json,
         // affinché sia utilizzabile con le api.
