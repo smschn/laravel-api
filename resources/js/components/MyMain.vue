@@ -23,6 +23,19 @@
                 </div>
             </div>
         </div>
+        <!-- paginazione -->
+        <nav>
+            <ul class="pagination">
+                <!--
+                    uso un operatore ternario per disabilitare i pulsanti in prima e ultima pagina.
+                    al click su un bottone, richiamo la funzione getPosts() passando come parametro il numero della pagina successiva\precedente.
+                    uso un <.prevent> per prevenire l'evento che scatena il tag <a> (cioè il caricamento della pagina con url </#>).
+                -->
+                <li class="page-item" v-bind:class="(currentPage==1?'disabled':'')"><a class="page-link" href="#" @click.prevent="getPosts(currentPage - 1)">Previous</a></li>
+                <li class="page-item disabled"><span class="page-link">{{currentPage}}/{{lastPage}}</span></li>
+                <li class="page-item" v-bind:class="(currentPage==lastPage)?'disabled':''"><a class="page-link" href="#" @click.prevent="getPosts(currentPage + 1)">Next</a></li>
+            </ul>
+        </nav>
     </div>
 </template>
 
@@ -32,24 +45,37 @@ export default {
     data() {
         return {
             posts: [],
-            loading: true, // variabile per mostrare un loader
+            loading: true, // variabile per mostrare un loader.
+            currentPage: 1,
+            lastPage: null // saprò il numero solo dopo la chiamata api.
         }
     },
     methods: {
         // metodo per catturare i post dalla api tramite axios.
-        getPosts() {
+        getPosts(page) {
 
             // ad ogni chiamata axios setto il loader su true per farlo apparire in pagina.
             this.loading = true;
 
-            // per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
-            axios.get('/api/posts')
+            /*
+                per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
+                per gestire i post su più pagine, uso il secondo parametro di get() per gestire le query dinamicamente:
+                per ottenere un link del tipo: <../api/posts?page=1>,
+                con il numero del parametro <page> passato dall'html all'evento @click.
+            */
+            axios.get('/api/posts', {
+                params: {
+                    page: page
+                }
+            })
             .then( (response) => {
-                this.posts = response.data.results;
+                this.posts = response.data.results.data; // attenzione: DOPO la ->paginate() i post cambiano path nel json.
+                this.currentPage = response.data.results.current_page; // dati presenti solo DOPO la ->paginate() nell'api controller.
+                this.lastPage = response.data.results.last_page; // dati presenti solo DOPO la ->paginate().
                 this.loading = false; // setto il loader a false una volta ricevuta la risposta dall'api.
             })
         },
-        // metodo per tagliare il testo di un contenuto che superi una lunghezza decisa da me.
+        // metodo per tagliare il testo di un contenuto che superi una data lunghezza.
         truncateText(text, maxLength) {
             if (text.length < maxLength) {
                 return text;

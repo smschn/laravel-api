@@ -1945,24 +1945,42 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       posts: [],
-      loading: true // variabile per mostrare un loader
+      loading: true,
+      // variabile per mostrare un loader.
+      currentPage: 1,
+      lastPage: null // saprò il numero solo dopo la chiamata api.
 
     };
   },
   methods: {
     // metodo per catturare i post dalla api tramite axios.
-    getPosts: function getPosts() {
+    getPosts: function getPosts(page) {
       var _this = this;
 
       // ad ogni chiamata axios setto il loader su true per farlo apparire in pagina.
-      this.loading = true; // per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
+      this.loading = true;
+      /*
+          per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
+          per gestire i post su più pagine, uso il secondo parametro di get() per gestire le query dinamicamente:
+          per ottenere un link del tipo: <../api/posts?page=1>,
+          con il numero del parametro <page> passato dall'html all'evento @click.
+      */
 
-      axios.get('/api/posts').then(function (response) {
-        _this.posts = response.data.results;
+      axios.get('/api/posts', {
+        params: {
+          page: page
+        }
+      }).then(function (response) {
+        _this.posts = response.data.results.data; // attenzione: DOPO la ->paginate() i post cambiano path nel json.
+
+        _this.currentPage = response.data.results.current_page; // dati presenti solo DOPO la ->paginate() nell'api controller.
+
+        _this.lastPage = response.data.results.last_page; // dati presenti solo DOPO la ->paginate().
+
         _this.loading = false; // setto il loader a false una volta ricevuta la risposta dall'api.
       });
     },
-    // metodo per tagliare il testo di un contenuto che superi una lunghezza decisa da me.
+    // metodo per tagliare il testo di un contenuto che superi una data lunghezza.
     truncateText: function truncateText(text, maxLength) {
       if (text.length < maxLength) {
         return text;
@@ -2109,7 +2127,41 @@ var render = function render() {
         href: "#"
       }
     }, [_vm._v("Read more...")])])]);
-  }), 0)]);
+  }), 0), _vm._v(" "), _c("nav", [_c("ul", {
+    staticClass: "pagination"
+  }, [_c("li", {
+    staticClass: "page-item",
+    "class": _vm.currentPage == 1 ? "disabled" : ""
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.getPosts(_vm.currentPage - 1);
+      }
+    }
+  }, [_vm._v("Previous")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item disabled"
+  }, [_c("span", {
+    staticClass: "page-link"
+  }, [_vm._v(_vm._s(_vm.currentPage) + "/" + _vm._s(_vm.lastPage))])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item",
+    "class": _vm.currentPage == _vm.lastPage ? "disabled" : ""
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.getPosts(_vm.currentPage + 1);
+      }
+    }
+  }, [_vm._v("Next")])])])])]);
 };
 
 var staticRenderFns = [function () {

@@ -17,10 +17,12 @@ class PostController extends Controller
     public function index()
     {
         /*
-        con il metodo statico ::with()
-        ricostruisco la relazione post <-> category <-> tags PRIMA di inviare i dati tramite API.
+        con il metodo statico ::with() ricostruisco la relazione post <-> category <-> tags PRIMA di inviare i dati tramite API.
+        con il metodo ->paginate() laravel costruisce il formato json di risposta alla chiamata api\axios con una struttura atta
+        a mostrare risultati su più pagine: come parametro accetta il numero di risultati per pagina:
+        verifico con postman i nuovi campi disponibili.
         */
-        $posts = Post::with(['category', 'tags'])->get();
+        $posts = Post::with(['category', 'tags'])->paginate(2); // si chiama: Eager Loading Multiple Relationships.
 
         // faccio una return della collection <posts> che viene trasformata in formato json,
         // affinché sia utilizzabile con le api.
