@@ -2,11 +2,11 @@
 // cioè accessibile senza login.
 
 // dichiaro Vue globalmente legandola all'oggetto window (la finestra del browser).
-window.Vue = require('vue'); 
+window.Vue = require('vue');
 
 // lego axios all'oggetto window: così posso usarlo in tutti i componenti senza doverlo importare in ciascuno di essi,
 // perché viene caricato con la finestra (window) del browser.
-window.Vue = require('axios'); 
+window.axios = require('axios');
 
 /*
 // specifico che tutte le richieste axios fatte al server siano fatte in json

@@ -1941,7 +1941,27 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'MyMain'
+  name: 'MyMain',
+  data: function data() {
+    return {
+      posts: []
+    };
+  },
+  methods: {
+    // metodo per catturare i post dalla api tramite axios.
+    getPosts: function getPosts() {
+      var _this = this;
+
+      // per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
+      axios.get('/api/posts').then(function (response) {
+        _this.posts = response.data.results;
+      });
+    }
+  },
+  mounted: function mounted() {
+    // lancio la chiamata api al montaggio dell'istanza di vue.
+    this.getPosts();
+  }
 });
 
 /***/ }),
@@ -2050,7 +2070,27 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div");
+  return _c("div", {
+    staticClass: "container"
+  }, [_c("h1", {
+    staticClass: "mb-3"
+  }, [_vm._v("Posts list")]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, _vm._l(_vm.posts, function (post, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "card col-12 mb-3"
+    }, [_c("div", {
+      staticClass: "card-body"
+    }, [_c("h5", {
+      staticClass: "card-title"
+    }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("a", {
+      staticClass: "btn btn-primary",
+      attrs: {
+        href: "#"
+      }
+    }, [_vm._v("Read more...")])])]);
+  }), 0)]);
 };
 
 var staticRenderFns = [];
@@ -14630,7 +14670,7 @@ __webpack_require__.r(__webpack_exports__);
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // lego axios all'oggetto window: così posso usarlo in tutti i componenti senza doverlo importare in ciascuno di essi,
 // perché viene caricato con la finestra (window) del browser.
 
-window.Vue = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /*
 // specifico che tutte le richieste axios fatte al server siano fatte in json
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
