@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/
+
+/*
+creo le routes per le api.
+in automatico, queste routes si trovano dentro l'url: </api/..>:
+es: localhost:9999/api/posts).
+*/
+Route::get('posts', 'Api\PostController@index');
+Route::get('posts/{post}', 'Api\PostController@show');
