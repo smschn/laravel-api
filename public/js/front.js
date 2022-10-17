@@ -1944,7 +1944,9 @@ __webpack_require__.r(__webpack_exports__);
   name: 'MyMain',
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      loading: true // variabile per mostrare un loader
+
     };
   },
   methods: {
@@ -1952,9 +1954,12 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts() {
       var _this = this;
 
-      // per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
+      // ad ogni chiamata axios setto il loader su true per farlo apparire in pagina.
+      this.loading = true; // per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
+
       axios.get('/api/posts').then(function (response) {
         _this.posts = response.data.results;
+        _this.loading = false; // setto il loader a false una volta ricevuta la risposta dall'api.
       });
     },
     // metodo per tagliare il testo di un contenuto che superi una lunghezza decisa da me.
@@ -2082,7 +2087,9 @@ var render = function render() {
     staticClass: "container"
   }, [_c("h1", {
     staticClass: "mb-3"
-  }, [_vm._v("Posts list")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Posts list")]), _vm._v(" "), _vm.loading ? _c("div", {
+    staticClass: "d-flex justify-content-center"
+  }, [_vm._m(0)]) : _c("div", {
     staticClass: "row"
   }, _vm._l(_vm.posts, function (post, index) {
     return _c("div", {
@@ -2105,7 +2112,19 @@ var render = function render() {
   }), 0)]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("div", {
+    staticClass: "spinner-border",
+    attrs: {
+      role: "status"
+    }
+  }, [_c("span", {
+    staticClass: "sr-only"
+  }, [_vm._v("Loading...")])]);
+}];
 render._withStripped = true;
 
 
