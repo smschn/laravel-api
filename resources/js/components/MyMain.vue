@@ -60,7 +60,7 @@ export default {
             /*
                 per sapere l'url da contattare, controllare la lista delle routes con: php artisan route:list.
                 per gestire i post su più pagine, uso il secondo parametro di get() per gestire le query dinamicamente:
-                per ottenere un link del tipo: <../api/posts?page=1>,
+                per ottenere un link del tipo: <../api/posts?page=1> (vedi in postman),
                 con il numero del parametro <page> passato dall'html all'evento @click.
             */
             axios.get('/api/posts', {
@@ -85,8 +85,11 @@ export default {
         }
     },
     mounted() {
-        // lancio la chiamata api al montaggio dell'istanza di vue.
-        this.getPosts();
+        /*
+            lancio la chiamata api al montaggio dell'istanza di vue.
+            di default, la funzione mostra la pagina numero 1.
+        */
+        this.getPosts(1);
     }
 }
 </script>
