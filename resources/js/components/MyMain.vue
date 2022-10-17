@@ -19,6 +19,11 @@
                     <p class="card-text">{{post.category?post.category.name:'-'}}</p>
                     <!-- per mezzo di una funzione taglio il testo del contenuto -->
                     <p class="card-text">{{truncateText(post.content, 15)}}</p>
+                    <!-- aggiungo i tag (sono un array contenuto in post) -->
+                    <ul v-if="post.tags.length" class="card-text list-unstyled d-flex">
+                        <li v-for="(tag, index) in post.tags" v-bind:key='index' class="btn btn-secondary mr-2 disabled">{{tag.name}}</li>
+                    </ul>
+                    <p v-else>-</p>
                     <a href="#" class="btn btn-primary">Read more...</a>
                 </div>
             </div>
@@ -47,7 +52,7 @@ export default {
             posts: [],
             loading: true, // variabile per mostrare un loader.
             currentPage: 1,
-            lastPage: null // saprò il numero solo dopo la chiamata api.
+            lastPage: null // saprò il numero solo dopo la chiamata api.,
         }
     },
     methods: {

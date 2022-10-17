@@ -1948,7 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       // variabile per mostrare un loader.
       currentPage: 1,
-      lastPage: null // saprò il numero solo dopo la chiamata api.
+      lastPage: null // saprò il numero solo dopo la chiamata api.,
 
     };
   },
@@ -2124,7 +2124,14 @@ var render = function render() {
       staticClass: "card-text"
     }, [_vm._v(_vm._s(post.category ? post.category.name : "-"))]), _vm._v(" "), _c("p", {
       staticClass: "card-text"
-    }, [_vm._v(_vm._s(_vm.truncateText(post.content, 15)))]), _vm._v(" "), _c("a", {
+    }, [_vm._v(_vm._s(_vm.truncateText(post.content, 15)))]), _vm._v(" "), post.tags.length ? _c("ul", {
+      staticClass: "card-text list-unstyled d-flex"
+    }, _vm._l(post.tags, function (tag, index) {
+      return _c("li", {
+        key: index,
+        staticClass: "btn btn-secondary mr-2 disabled"
+      }, [_vm._v(_vm._s(tag.name))]);
+    }), 0) : _c("p", [_vm._v("-")]), _vm._v(" "), _c("a", {
       staticClass: "btn btn-primary",
       attrs: {
         href: "#"
