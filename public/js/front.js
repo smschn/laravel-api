@@ -2086,7 +2086,9 @@ var render = function render() {
       staticClass: "card-title"
     }, [_vm._v(_vm._s(post.title))]), _vm._v(" "), _c("h5", {
       staticClass: "card-title"
-    }, [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("a", {
+    }, [_vm._v(_vm._s(post.content))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text"
+    }, [_vm._v(_vm._s(post.category ? post.category.name : "-"))]), _vm._v(" "), _c("a", {
       staticClass: "btn btn-primary",
       attrs: {
         href: "#"

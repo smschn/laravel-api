@@ -6,6 +6,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{post.title}}</h5>
                     <h5 class="card-title">{{post.content}}</h5>
+                    <!-- con operatore ternario verifico presenza categoria e stampo di conseguenza -->
+                    <p class="card-text">{{post.category?post.category.name:'-'}}</p>
                     <a href="#" class="btn btn-primary">Read more...</a>
                 </div>
             </div>
