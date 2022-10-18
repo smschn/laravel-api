@@ -15,7 +15,7 @@
                     <!--
                         ricorda: prima serve ricostruire le relazioni nella api con il metodo statico ::with.
                         poi, con operatore ternario verifico presenza categoria e stampo di conseguenza.
-                        -->
+                    -->
                     <p class="card-text">{{post.category?post.category.name:'-'}}</p>
                     <!-- per mezzo di una funzione taglio il testo del contenuto -->
                     <p class="card-text">{{truncateText(post.content, 15)}}</p>
@@ -52,7 +52,7 @@ export default {
             posts: [],
             loading: true, // variabile per mostrare un loader.
             currentPage: 1,
-            lastPage: null // saprò il numero solo dopo la chiamata api.,
+            lastPage: null // saprò il numero solo dopo la chiamata api.
         }
     },
     methods: {

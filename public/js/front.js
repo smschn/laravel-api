@@ -1948,7 +1948,7 @@ __webpack_require__.r(__webpack_exports__);
       loading: true,
       // variabile per mostrare un loader.
       currentPage: 1,
-      lastPage: null // saprò il numero solo dopo la chiamata api.,
+      lastPage: null // saprò il numero solo dopo la chiamata api.
 
     };
   },
